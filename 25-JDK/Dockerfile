@@ -10,7 +10,7 @@ ARG TARGETPLATFORM
 ARG GRAAL_VERSION=latest
 ARG JAVA_VERSION=25
 
-MAINTAINER RabbitTV, <contact@rabbittv.ca>
+LABEL maintainer="RabbitTV <contact@rabbittv.ca>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -34,8 +34,7 @@ RUN apt-get update -y \
   && rm -rf /tmp/graalvm.tar.gz
 
 ENV JAVA_HOME=/opt/java/graalvm \
-
-    PATH="/opt/java/graalvm/bin:$PATH"
+    PATH="/opt/java/graalvm/bin:$PATH"
 
 # Step 2 - add pterodactyl stuff
 RUN useradd -d /home/container -m container
@@ -46,6 +45,6 @@ ENV         USER=container HOME=/home/container
 
 WORKDIR     /home/container
 
-COPY        ./../entrypoint.sh /entrypoint.sh
+COPY        ./entrypoint.sh /entrypoint.sh
 
 CMD         ["/bin/bash", "/entrypoint.sh"]
