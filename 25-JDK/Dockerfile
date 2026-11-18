@@ -1,11 +1,7 @@
 # ----------------------------------
-
 # Pterodactyl Core Dockerfile
-
 # Environment: Java
-
 # Minimum Panel Version: 1.7.0
-
 # ----------------------------------
 
 FROM debian:13-slim
