@@ -6,7 +6,7 @@
 FROM ubuntu:26.04
 
 ARG TARGETPLATFORM
-ARG GRAAL_VERSION=25.0.4
+ARG GRAAL_VERSION=25i5
 ARG JAVA_VERSION=25
 
 MAINTAINER RikoDEV, <kontakt@riko.dev>
@@ -24,7 +24,7 @@ RUN apt-get update -y \
          "linux/amd64")  ARCH=x64  ;; \
          "linux/arm64")  ARCH=aarch64  ;; \
     esac \
-  && curl --retry 3 -Lfso /tmp/graalvm.tar.gz https://download.oracle.com/graalvm/${JAVA_VERSION}/archive/graalvm-jdk-${GRAAL_VERSION}_linux-${ARCH}_bin.tar.gz \
+  && curl --retry 3 -Lfso /tmp/graalvm.tar.gz https://gds.oracle.com/download/graal/${GRAAL_VERSION}/latest/graalvm-jdk-${GRAAL_VERSION}-${JAVA_VERSION}_linux-${ARCH}_bin.tar.gz \
   && mkdir -p /opt/java/graalvm \
   && cd /opt/java/graalvm \
   && tar -xf /tmp/graalvm.tar.gz --strip-components=1 \
@@ -36,8 +36,8 @@ ENV JAVA_HOME=/opt/java/graalvm \
     PATH="/opt/java/graalvm/bin:$PATH"
 
 # Mitigate CVE-2026-91403: distrust compromised eMudhra CAs and enforce revocation checks
-COPY        ./../cve-2026-91403.sh /tmp/cve-2026-91403.sh
-RUN bash /tmp/cve-2026-91403.sh && rm -f /tmp/cve-2026-91403.sh
+# COPY        ./../cve-2026-91403.sh /tmp/cve-2026-91403.sh
+# RUN bash /tmp/cve-2026-91403.sh && rm -f /tmp/cve-2026-91403.sh    
 
 ENV JAVA_TOOL_OPTIONS="-Dcom.sun.net.ssl.checkRevocation=true -Dcom.sun.security.enableCRLDP=true"
 
