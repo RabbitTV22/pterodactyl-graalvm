@@ -42,9 +42,9 @@ jobs:
             type=raw,value=25-JDK
 
       - name: Build and push
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
-          context: ./25-JDK
+          context: .
           file: ./25-JDK/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
